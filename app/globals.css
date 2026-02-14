@@ -1,26 +1,178 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Libre+Baskerville:wght@400;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  font-family: Georgia, serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+}
+
+/* Perspective for realism */
+.envelope-wrapper {
+  perspective: 1200px;
+}
+
+/* Envelope base */
+.envelope {
+  position: relative;
+  width: 490px;
+  height: 320px;
+}
+
+/* Back of envelope */
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background: #f6f1ec;
+  border-radius: 6px;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.25);
+  z-index: 1;
+}
+
+.letter {
+  letter-spacing: 0.2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 160px);
+  opacity: 0;
+
+  /* Page proportions */
+  width: 82%;
+  height: 400px;
+
+  background: linear-gradient(#ffffff, #f6f6f6);
+  border-radius: 2px;
+
+  /* Real paper margins */
+  padding: 36px 40px;
+
+  text-align: left;
+  z-index: 4;
+
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.2);
+
+  transition:
+    transform 1.2s ease,
+    opacity 0.6s ease;
+}
+
+/* Letter slides up but stays partially inside */
+.envelope.opened .letter.show {
+  transform: translate(-50%, -40px);
+  opacity: 1;
+}
+
+
+/* Front sleeve */
+.envelope-front {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 65%;
+  background: #f2ebe5;
+  border-radius: 0 0 6px 6px;
+  z-index: 3;
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 55%;
+  background: #e35d5b;
+  clip-path: polygon(0 0, 100% 0, 50% 75%);
+  transform-origin: top;
+  transform: rotateX(0deg);
+  transition: transform 1.2s ease;
+  z-index: 5;
+}
+
+/* When opened, flap folds behind letter */
+.flap.flap-open {
+  transform: rotateX(160deg);
+  z-index: 2;
+}
+
+/* Text */
+h2 {
+  font-family: 'Playfair Display', serif;
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #e35d5b;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+}
+
+.letter-list {
+  margin-top: 40px;
+}
+
+p {
+  font-family: 'Libre Baskerville', serif;
+  margin: 0;
+  color: #444;
+  line-height: 1.2;
+  font-size: 15.5px;
+}
+
+/* Buttons */
+button {
+  background: #e35d5b;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 22px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #c94a48;
+}
+
+/* Open Me button */
+.open-btn {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+}
+
+.checklist li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 15.5px;
+  color: #444;
+}
+
+/* Visual-only checkbox */
+.empty-box {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #b8b0a8;
+  border-radius: 2px;
+  background: #fff;
+  flex-shrink: 0;
 }

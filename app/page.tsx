@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 export default function Home() {
@@ -7,60 +6,61 @@ export default function Home() {
   const [accepted, setAccepted] = useState(false);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-pink-200">
-      <div className="text-center">
-        <div className={`relative w-72 h-48 bg-white rounded shadow-xl overflow-hidden`}>
-          
-          {/* Envelope flap */}
-          <div
-            className={`absolute top-0 left-0 w-full h-full bg-red-400 
-              transition-transform duration-700 origin-top
-              ${opened ? "rotate-x-180" : ""}`}
-            style={{
-              clipPath: "polygon(0 0, 100% 0, 50% 50%)",
-            }}
-          />
+    <main className="page">
+      <div className="envelope-wrapper">
+        <div className={`envelope ${opened ? "opened" : ""}`}>
+
+          {/* Back of envelope */}
+          <div className="envelope-back"></div>
 
           {/* Letter */}
-          {opened && (
-            <div className="absolute inset-0 p-4 bg-white animate-slideUp">
-              {!accepted ? (
-                <>
-                  <h2 className="text-red-500 text-xl font-bold">
-                    Will you be my Valentine? 💖
-                  </h2>
-                  <button
-                    onClick={() => setAccepted(true)}
-                    className="mt-4 px-6 py-2 bg-red-500 text-white rounded-full"
-                  >
-                    YES
-                  </button>
-                </>
-              ) : (
-                <>
-                  <h2 className="text-red-500 text-xl font-bold">
-                    Our Day 💕
-                  </h2>
-                  <p className="mt-2 text-gray-700">
-                    Coffee ☕ <br />
-                    Long walks 🚶‍♂️ <br />
-                    Good food 🍽️ <br />
-                    Movie night 🎬❤️
-                  </p>
-                </>
-              )}
-            </div>
+          <div className={`letter ${opened ? "show" : ""}`}>
+            {!accepted ? (
+              <>
+                <h2>Will you be my Valentine?</h2>
+                <button onClick={() => setAccepted(true)}>YES</button>
+              </>
+            ) : (
+              <>
+                <h2>Our Valentine’s Day 21/02/2026</h2>
+                <ul className="checklist">
+                  <li>
+                    <span>Coffee & Breakfast (Seven Shores or Café 22)</span>
+                    <span className="empty-box"></span>
+                  </li>
+                  <li>
+                    <span>Check into Hotel (Quality Inn @ 3:00PM)</span>
+                    <span className="empty-box"></span>
+                  </li>                  
+                  <li>
+                    <span>Get paint-by-numbers kit from Copper's Hobbies</span>
+                    <span className="empty-box"></span>
+                  </li>
+                  <li>
+                    <span>Dinner @ Charcoal Steakhouse</span>
+                    <span className="empty-box"></span>
+                  </li>
+                  <li>
+                    <span>Watch Movie (tere ishk mein)</span>
+                    <span className="empty-box"></span>
+                  </li>
+                </ul>
+              </>
+            )}
+          </div>
+
+          {/* Front sleeve */}
+          <div className="envelope-front"></div>
+
+          {/* Flap */}
+          <div className={`flap ${opened ? "flap-open" : ""}`}></div>
+
+          {!opened && (
+            <button className="open-btn" onClick={() => setOpened(true)}>
+              Open Me
+            </button>
           )}
         </div>
-
-        {!opened && (
-          <button
-            onClick={() => setOpened(true)}
-            className="mt-6 px-6 py-2 bg-red-500 text-white rounded-full"
-          >
-            Open Me
-          </button>
-        )}
       </div>
     </main>
   );
